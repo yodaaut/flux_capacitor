@@ -3,6 +3,9 @@ If Pull-Down is triggered on an input pin then set an output pin on HIGH for
 Relais activation and create a PWM-Signal depending on received values from
 Kostals plenticore through iobroker.
 
+## Dependency
+You'll need python3-rpi.gpio_0.7.0-0.1~bpo10+1_armhf.deb to be installed.
+
 ## Install
 
 ```bash
