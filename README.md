@@ -39,15 +39,15 @@ def set_config():
     globals()['pollinterval']           = get_pollinterval()
 ```
 
-gpio_pwm => which pin should be used for PWM-Signal (default 11)
-gpio_output => which pin should be used for HIGH/low output (default 18)
-gpio_input => which pin should be used for Pull-Down Input (default 22)
-gpio_frequency => value in Hz
-kostal_start_value => any value below will be ignored on output
-kostal_max_value => should be set to MAX Value
-plenticore_instance => which instance to use
-debug => turn on debug messages (shown on commandline)
-pollinterval => gets interval setting from Plenticore config (don't change)
+gpio_pwm => which pin should be used for PWM-Signal (default 11)  
+gpio_output => which pin should be used for HIGH/low output (default 18)  
+gpio_input => which pin should be used for Pull-Down Input (default 22)  
+gpio_frequency => value in Hz  
+kostal_start_value => any value below will be ignored on output  
+kostal_max_value => should be set to MAX Value  
+plenticore_instance => which instance to use  
+debug => turn on debug messages (shown on commandline)  
+pollinterval => gets interval setting from Plenticore config (don't change)  
 
 ## Testing
 If you haven't installed iobroker on your Raspberry then just symlink
