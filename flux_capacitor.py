@@ -23,7 +23,7 @@ def set_config():
     globals()['kostal_start_value']     = 500
     globals()['kostal_max_value']       = 4500
     globals()['plenticore_instance']    = 0
-    globals()['debug']                  = True
+    globals()['debug']                  = False
 
     globals()['pollinterval']           = get_pollinterval()
 
