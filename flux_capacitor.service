@@ -1,0 +1,11 @@
+[Unit]
+Description=Flux Capacitor
+After=iobroker.service
+
+[Service]
+ExecStart=/opt/scripts/flux_capacitor.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
