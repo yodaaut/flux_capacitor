@@ -70,8 +70,12 @@ if __name__ == "__main__":
         else:
             if debug:
                 print("Pollinterval: ", pollinterval)
-            GPIO.output(gpio_output, 0)
             togrid_p=get_togrid_p()
-            main(float(round((togrid_p/kostal_max_value*100), 3)))
+            if togrid_p != 0:
+                GPIO.output(gpio_output, 1)
+                main(float(round((togrid_p/kostal_max_value*100), 3)))
+            else:
+                GPIO.output(gpio_output, 0)
+                main(0)
 
         time.sleep(pollinterval/1000)
