@@ -52,7 +52,35 @@ plenticore_instance => which instance to use
 debug => turn on debug messages (shown on commandline or journalctl)  
 pollinterval => gets interval setting from Plenticore config (don't change)  
 
+## Schematics
+
+![Breadboard](./schematics/Breadboard.svg)
+
+## Bill of Materials
+
+### Assembly List
+
+| Label         | Part Type           | Properties                                                   |
+| ------------- | ------------------- | ------------------------------------------------------------ |
+| LED1          | Green (565nm) LED   | package 0603 [SMD]; color Green (565nm)                      |
+| LED2          | Red (633nm) LED     | package 0603 [SMD]; color Red (633nm)                        |
+| R1            | 330Ω Resistor       | package 0805 [SMD]; resistance 330Ω; tolerance ±5%           |
+| R2            | 330Ω Resistor       | package 0805 [SMD]; resistance 330Ω; tolerance ±5%           |
+| Raspberry Pi1 | Raspberry Pi B rev2 | variant Raspberry Pi B(Rev 02); processor Broadcom SoC BCM2835 ARMv6 |
+| S1            | Momentary Switch    | package ksa_sealed_tac_switch; variant ksa_sealed            |
+
+### Shopping List
+
+| Amount | Part Type           | Properties                                                   |
+| ------ | ------------------- | ------------------------------------------------------------ |
+| 1      | Green (565nm) LED   | package 0603 [SMD]; color Green (565nm)                      |
+| 1      | Red (633nm) LED     | package 0603 [SMD]; color Red (633nm)                        |
+| 2      | 330Ω Resistor       | package 0805 [SMD]; resistance 330Ω; tolerance ±5%           |
+| 1      | Raspberry Pi B rev2 | variant Raspberry Pi B(Rev 02); processor Broadcom SoC BCM2835 ARMv6 |
+| 1      | Momentary Switch    | package ksa_sealed_tac_switch; variant ksa_sealed            |
+
 ## Testing
+
 If you haven't installed iobroker on your Raspberry then just symlink
 iobroker-test to your binary PATH.
 This will fake the necessary commands.
