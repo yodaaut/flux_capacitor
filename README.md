@@ -46,7 +46,7 @@ gpio_frequency => value in Hz
 kostal_start_value => any value below will be ignored on output  
 kostal_max_value => should be set to MAX Value  
 plenticore_instance => which instance to use  
-debug => turn on debug messages (shown on commandline)  
+debug => turn on debug messages (shown on commandline or journalctl)  
 pollinterval => gets interval setting from Plenticore config (don't change)  
 
 ## Testing
@@ -58,3 +58,9 @@ ln -s $(pwd)/iobroker_test /usr/local/sbin/iobroker
 ```
 There is a script called "iobroker", which should fake the iobroker commands if
 you haven't installed iobroke
+
+## Logging
+If debug is enabled you can display messages with:
+```bash
+journalctl --boot --unit flux_capacitor.service --follow
+```
