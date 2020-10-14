@@ -64,14 +64,14 @@ if __name__ == "__main__":
     while True:
         if GPIO.input(gpio_input):
             GPIO.output(gpio_output, 1)
-            togrid_p=get_togrid_p()
             if debug:
-                print("Pollinterval: ", pollinterval)
-            main(float(round((togrid_p/kostal_max_value*100), 3)))
+                print("Manual mode")
+            main(100)
         else:
             if debug:
-                print("Nothing to do")
+                print("Pollinterval: ", pollinterval)
             GPIO.output(gpio_output, 0)
-            main(0)
+            togrid_p=get_togrid_p()
+            main(float(round((togrid_p/kostal_max_value*100), 3)))
 
         time.sleep(pollinterval/1000)
