@@ -1,6 +1,6 @@
 # Flux Capacitor
 If Pull-Down is triggered on an input pin then set an output pin on HIGH for
-Relais activation and create a PWM-Signal depending on received values from
+relay activation and create a PWM-Signal depending on received values from
 Kostals plenticore through iobroker.
 
 ## Dependency
@@ -25,8 +25,8 @@ def set_config():
     ##INFO
     # BCM    <=> BOARD 'usage'
     # gpio17 <=> pin11 'pwm_output'
-    # gpio24 <=> pin18 'HIGH/low relais output'
-    # gpio25 <=> pin22 'button/relais input'
+    # gpio24 <=> pin18 'HIGH/low relay output'
+    # gpio25 <=> pin22 'button/relay input'
     # program uses BOARD mode
     GPIO.setmode(GPIO.BOARD)
     globals()['gpio_pwm']               = 11

@@ -12,7 +12,7 @@ def set_config():
     # BCM    <=> BOARD 'usage'
     # gpio17 <=> pin11 'pwm_output'
     # gpio24 <=> pin18 'HIGH/low output'
-    # gpio25 <=> pin22 'button/relais input'
+    # gpio25 <=> pin22 'button/relay input'
     # program uses BOARD mode
     GPIO.setmode(GPIO.BOARD)
     globals()['gpio_pwm']               = 11
