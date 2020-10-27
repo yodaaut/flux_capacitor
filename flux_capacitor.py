@@ -27,11 +27,11 @@ def set_config():
     globals()['pollinterval']           = get_pollinterval()
 
 def signal_handler(signal, frame):
-    print("\nprogram exiting gracefully")
     # Cleanup
     change_dutycycle(gpio_pwm, 0)
     my_gpios.write(gpio_output, 0)
     my_gpios.stop() #close connection to pigpiod
+    print("\nprogram exited gracefully")
     sys.exit(0)
 
 def get_togrid_p():
