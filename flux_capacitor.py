@@ -1,5 +1,5 @@
 #!/usr/bin/env -S python3 -u
-import RPi.GPIO as GPIO
+import pigpio as GPIO
 import sys, signal
 import time
 import subprocess
@@ -28,8 +28,7 @@ def set_config():
     globals()['pollinterval']           = get_pollinterval()
 
 def signal_handler(signal, frame):
-    my_pwm.stop()
-    GPIO.cleanup()
+    my_gpios.stop()
     print("\nprogram exiting gracefully")
     sys.exit(0)
 
@@ -47,35 +46,50 @@ def get_pollinterval():
 
     return int(poll)
     
-def main(w):
+def change_dutycycle(gpio_pin,duty):
 
     if debug:
-        print("{}% PWM-Signal".format(w))
-    my_pwm.ChangeDutyCycle(w)
+        print("{}% PWM-Signal".format(duty))
+    my_gpios.set_PWM_dutycycle(gpio_pin,duty)
+
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
     signal.signal(signal.SIGTERM, signal_handler)
     set_config()
-    GPIO.setup([gpio_pwm,gpio_output],GPIO.OUT)
-    GPIO.setup(gpio_input,GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    my_pwm=GPIO.PWM(gpio_pwm,gpio_frequency)
-    my_pwm.start(0)
+    my_gpios = GPIO.pi()
+# NOTE
+## set_PWM_range(gpio, range)
+## range in 100%?
+## possible values for range are: 25-40000
+
+## PWMduty: 0-1000000 (1M)
+## PWMfreq: 1-125M
+## Example
+#
+#  pi.hardware_PWM(18, 1000, 250000) # 1000Hz 25% dutycycle
+# ALT5 should be pwm mode
+    my_gpios.set_mode(gpio_pwm, GPIO.ALT5)
+    my_gpios.set_PWM_range(gpio_pwm, 100)
+    my_gpios.set_mode(gpio_output, GPIO.OUTPUT)
+    my_gpios.set_mode(gpio_input, GPIO.INPUT)
+    my_gpios.set_pull_up_down(gpio_input, GPIO.PUD_DOWN)
+    my_gpios.hardware_PWM(gpio_pwm, gpio_frequency, 0)
     while True:
-        if GPIO.input(gpio_input):
-            GPIO.output(gpio_output, 1)
+        if my_gpios.read(gpio_input):
+            my_gpios.write(gpio_output, 1)
             if debug:
                 print("Manual mode")
-            main(100)
+            change_dutycycle(gpio_pwm, 100)
         else:
             if debug:
                 print("Pollinterval: ", pollinterval)
             togrid_p=get_togrid_p()
             if togrid_p != 0:
-                GPIO.output(gpio_output, 1)
-                main(float(round((togrid_p/kostal_max_value*100), 3)))
+                my_gpios.write(gpio_output, 1)
+                change_dutycycle(gpio_pwm, float(round((togrid_p/kostal_max_value*100), 3)))
             else:
-                GPIO.output(gpio_output, 0)
-                main(0)
+                my_gpios.write(gpio_output, 0)
+                change_dutycycle(gpio_pwm, 0)
 
         time.sleep(pollinterval/1000)
