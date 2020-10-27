@@ -4,7 +4,7 @@ relay activation and create a PWM-Signal depending on received values from
 Kostals plenticore through iobroker.
 
 ## Dependency
-You'll need python3-rpi.gpio_0.7.0-0.1~bpo10+1_armhf.deb to be installed.
+You'll need python3-pigpio_1.71-0~rpt1_all.deb to be installed.
 
 ## Install
 
