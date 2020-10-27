@@ -10,14 +10,13 @@ import json
 def set_config():
     ##INFO
     # BCM    <=> BOARD 'usage'
-    # gpio17 <=> pin11 'pwm_output'
+    # gpio18 <=> pin12 'pwm_output'
     # gpio24 <=> pin18 'HIGH/low output'
     # gpio25 <=> pin22 'button/relay input'
-    # program uses BOARD mode
-    GPIO.setmode(GPIO.BOARD)
-    globals()['gpio_pwm']               = 11
-    globals()['gpio_output']            = 18
-    globals()['gpio_input']             = 22
+    # program uses BCM mode
+    globals()['gpio_pwm']               = 18
+    globals()['gpio_output']            = 24
+    globals()['gpio_input']             = 25
 
     globals()['gpio_frequency']         = 1000
     globals()['kostal_start_value']     = 500
