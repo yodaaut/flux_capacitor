@@ -56,6 +56,8 @@ def change_dutycycle(pin,freq,duty):
     # expected value for duty between 0.000-100.000% float
     # needed value  for hardware_PWM between 0-1000000 (1M) integer
     duty_hard_pwm=int(duty*10000)
+    if debug:
+        print("{} duty_hard_pwm-Signal".format(duty_hard_pwm))
     my_gpios.hardware_PWM(pin, freq, duty_hard_pwm)
 
 
