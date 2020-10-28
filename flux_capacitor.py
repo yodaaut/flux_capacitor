@@ -28,8 +28,9 @@ def set_config():
 
 def signal_handler(signal, frame):
     # Cleanup
-    change_dutycycle(gpio_pwm, 0)
-    my_gpios.write(gpio_output, 0)
+    my_gpios.set_mode(gpio_input, GPIO.CLEAR)
+    my_gpios.set_mode(gpio_pwm, GPIO.CLEAR)
+    my_gpios.set_mode(gpio_output, GPIO.CLEAR)
     my_gpios.stop() #close connection to pigpiod
     print("\nprogram exited gracefully")
     sys.exit(0)
@@ -48,11 +49,14 @@ def get_pollinterval():
 
     return int(poll)
     
-def change_dutycycle(gpio_pin,duty):
+def change_dutycycle(pin,freq,duty):
 
     if debug:
         print("{}% PWM-Signal".format(duty))
-    my_gpios.set_PWM_dutycycle(gpio_pin,duty)
+    # expected value for duty between 0.000-100.000% float
+    # needed value  for hardware_PWM between 0-1000000 (1M) integer
+    duty_hard_pwm=int(duty*10000)
+    my_gpios.hardware_PWM(pin, freq, duty_hard_pwm)
 
 
 if __name__ == "__main__":
@@ -70,9 +74,8 @@ if __name__ == "__main__":
 ## Example
 #
 #  pi.hardware_PWM(18, 1000, 250000) # 1000Hz 25% dutycycle
-# ALT5 should be pwm mode
+# ALT5 is pwm mode
     my_gpios.set_mode(gpio_pwm, GPIO.ALT5)
-    my_gpios.set_PWM_range(gpio_pwm, 100)
     my_gpios.set_mode(gpio_output, GPIO.OUTPUT)
     my_gpios.set_mode(gpio_input, GPIO.INPUT)
     my_gpios.set_pull_up_down(gpio_input, GPIO.PUD_DOWN)
@@ -82,16 +85,17 @@ if __name__ == "__main__":
             my_gpios.write(gpio_output, 1)
             if debug:
                 print("Manual mode")
-            change_dutycycle(gpio_pwm, 100)
+            change_dutycycle(gpio_pwm, gpio_frequency, 100)
         else:
             if debug:
                 print("Pollinterval: ", pollinterval)
             togrid_p=get_togrid_p()
             if togrid_p != 0:
                 my_gpios.write(gpio_output, 1)
-                change_dutycycle(gpio_pwm, float(round((togrid_p/kostal_max_value*100), 3)))
+                my_duty= float(round((togrid_p/kostal_max_value*100), 3))
+                change_dutycycle(gpio_pwm, gpio_frequency, my_duty)
             else:
                 my_gpios.write(gpio_output, 0)
-                change_dutycycle(gpio_pwm, 0)
+                change_dutycycle(gpio_pwm, gpio_frequency, 0)
 
         time.sleep(pollinterval/1000)
