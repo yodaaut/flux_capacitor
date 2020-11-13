@@ -51,17 +51,24 @@ def signal_handler(signal, frame):
     print("\nprogram exited gracefully")
     sys.exit(0)
 
-def get_togrid_p():
-    val = float(subprocess.run(["iobroker", "state", "getvalue", "plenticore." + str(plenticore_instance) + ".devices.local.ToGrid_P"],
+# NOTE
+# plenticore.X.devices.local.Home_P - the current total home power used
+# plenticore.X.devices.local.HomePv_P - the current home power directly provided by the plant
+# plenticore.X.devices.local.HomeGrid_P - the current home power provided by the grid
+# plenticore.X.devices.local.ToGrid_P - the current power sent to the grid. This value is calculated by the adapter and may not be 100% acurate.
+def get_power_value(power_item):
+    val = float(subprocess.run(["iobroker", "state", "getvalue", "plenticore." + str(plenticore_instance) + ".devices.local." + str(power_item)],
             stdout=subprocess.PIPE).stdout)
     if debug:
-        print("{}W ToGrid_P".format(val))
-    return 0 if val < kostal_start_value else val
+        print("{}W {}".format(val, power_item))
+    return val
 
 def get_pollinterval():
     data = json.loads(subprocess.run(["iobroker", "object", "get", "system.adapter.plenticore." + str(plenticore_instance)],
             stdout=subprocess.PIPE).stdout)
     poll = data['native']['pollinterval']
+    if debug:
+        print("Pollinterval: ", poll)
 
     return int(poll)
     
