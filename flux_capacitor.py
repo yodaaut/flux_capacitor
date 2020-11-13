@@ -83,6 +83,14 @@ def change_dutycycle(pin,freq,duty):
         print("{} duty_hard_pwm-Signal".format(duty_hard_pwm))
     my_gpios.hardware_PWM(pin, freq, duty_hard_pwm)
 
+def calc_duty(duty):
+
+    if debug:
+        print("{}W Delta of HomePv_P - Home_P".format(round(duty,3)))
+    # expected value between 0-kostal_max_value
+    # needed value in %
+    return float(round((duty/kostal_max_value*100), 3))
+
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal_handler)
