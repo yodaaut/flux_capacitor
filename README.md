@@ -24,14 +24,14 @@ Change preferences here
 def set_config():
     ##INFO
     # BCM    <=> BOARD 'usage'
-    # gpio17 <=> pin11 'pwm_output'
+    # gpio18 <=> pin12 'pwm_output'
     # gpio24 <=> pin18 'HIGH/low relay output'
     # gpio25 <=> pin22 'button/relay input'
-    # program uses BOARD mode
+    # program uses BCM mode
     GPIO.setmode(GPIO.BOARD)
-    globals()['gpio_pwm']               = 11
-    globals()['gpio_output']            = 18
-    globals()['gpio_input']             = 22
+    globals()['gpio_pwm']               = 18
+    globals()['gpio_output']            = 24
+    globals()['gpio_input']             = 25
 
     globals()['gpio_frequency']         = 1000
     globals()['kostal_start_value']     = 500
@@ -42,9 +42,9 @@ def set_config():
     globals()['pollinterval']           = get_pollinterval()
 ```
 
-gpio_pwm => which pin should be used for PWM-Signal (default 11)  
-gpio_output => which pin should be used for HIGH/low output (default 18)  
-gpio_input => which pin should be used for Pull-Down Input (default 22)  
+gpio_pwm => which pin should be used for PWM-Signal (default pin12|gpio18)  
+gpio_output => which pin should be used for HIGH/low output (default pin18|gpio24)  
+gpio_input => which pin should be used for Pull-Down Input (default pin22|gpio25)  
 gpio_frequency => value in Hz  
 kostal_start_value => any value below will be ignored on output  
 kostal_max_value => should be set to MAX Value  
