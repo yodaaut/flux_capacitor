@@ -114,6 +114,7 @@ if __name__ == "__main__":
     my_gpios.set_mode(gpio_input, GPIO.INPUT)
     my_gpios.set_pull_up_down(gpio_input, GPIO.PUD_DOWN)
     my_gpios.hardware_PWM(gpio_pwm, gpio_frequency, 0)
+    my_duty=0
     while True:
         if my_gpios.read(gpio_input):
             my_gpios.write(gpio_output, 1)
@@ -123,13 +124,19 @@ if __name__ == "__main__":
         else:
             if debug:
                 print("Pollinterval: ", pollinterval)
-            togrid_p=get_togrid_p()
-            if togrid_p != 0:
+            homepv_p=get_power_value("HomePv_P") # expected value between 0.000 and kostal_max_value
+            home_p=get_power_value("Home_P")     # expected value between 0.000 and ∞ (plus duty if enabled)
+            if (abs(home_p - my_duty) < (homepv_p - kostal_start_value)):
                 my_gpios.write(gpio_output, 1)
-                my_duty= float(round((togrid_p/kostal_max_value*100), 3))
-                change_dutycycle(gpio_pwm, gpio_frequency, my_duty)
+                # TODO
+                # decide how to use kostal_start_value
+                # if kostal_start_value is subtracted, PWM-Output-Signal will be between 0% and 100%
+                my_duty= (homepv_p - kostal_start_value) - abs(home_p - my_duty)
+                # if kostal_start_value is not subtracted, PWM-Output-Signal will be between 11.11112 and 100%
+                #my_duty= homepv_p - abs(home_p - my_duty)
             else:
+                my_duty=0
                 my_gpios.write(gpio_output, 0)
-                change_dutycycle(gpio_pwm, gpio_frequency, 0)
+            change_dutycycle(gpio_pwm, gpio_frequency, calc_duty(my_duty))
 
         time.sleep(pollinterval/1000)
