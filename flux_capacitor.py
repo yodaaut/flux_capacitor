@@ -119,11 +119,11 @@ if __name__ == "__main__":
         if my_gpios.read(gpio_input):
             my_gpios.write(gpio_output, 1)
             if debug:
-                print("Manual mode")
+                print("\nManual mode")
             change_dutycycle(gpio_pwm, gpio_frequency, 100)
         else:
             if debug:
-                print("Pollinterval: ", pollinterval)
+                print("\nAuto mode")
             homepv_p=get_power_value("HomePv_P") # expected value between 0.000 and kostal_max_value
             home_p=get_power_value("Home_P")     # expected value between 0.000 and ∞ (plus duty if enabled)
             if (abs(home_p - my_duty) < (homepv_p - kostal_start_value)):
