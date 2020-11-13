@@ -97,17 +97,18 @@ if __name__ == "__main__":
     signal.signal(signal.SIGTERM, signal_handler)
     set_config()
     my_gpios = GPIO.pi()
-# NOTE
-## set_PWM_range(gpio, range)
-## range in 100%?
-## possible values for range are: 25-40000
 
-## PWMduty: 0-1000000 (1M)
-## PWMfreq: 1-125M
-## Example
-#
-#  pi.hardware_PWM(18, 1000, 250000) # 1000Hz 25% dutycycle
-# ALT5 is pwm mode
+    # NOTE
+    ## set_PWM_range(gpio, range)
+    ## range in 100%?
+    ## possible values for range are: 25-40000
+    
+    ## PWMduty: 0-1000000 (1M)
+    ## PWMfreq: 1-125M
+    ## Example
+    #
+    #  pi.hardware_PWM(18, 1000, 250000) # 1000Hz 25% dutycycle
+    # ALT5 is pwm mode
     my_gpios.set_mode(gpio_pwm, GPIO.ALT5)
     my_gpios.set_mode(gpio_output, GPIO.OUTPUT)
     my_gpios.set_mode(gpio_input, GPIO.INPUT)
