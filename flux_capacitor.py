@@ -5,6 +5,22 @@ import time
 import subprocess
 import json
 
+# NOTE
+# get current Home_P and HomePv_P and calculate PWM-Output-Signal
+# consider that PWM will be added to Home_P in the next round
+# plenticore.X.devices.local.Home_P - the current total home power used
+# plenticore.X.devices.local.HomePv_P - the current home power directly provided by the plant
+# Formula:
+# if(ABS(Home_P - current_PWM) < HomePV_P:
+#    new_PWM = HomePV_P - ABS(Home_P - current_PWM)
+# else:
+#    new_PWM = 0
+#
+# basic example
+# Sun - abs(PWM - House) =          = expected PWM
+# 100 - abs( 0  -    10) = 100 - 10 = 90
+# 100 - abs(90  -   100) = 100 - 10 = 90
+# 100 - abs(90  -   110) = 100 - 20 = 80
 
 
 def set_config():
