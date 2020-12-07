@@ -37,6 +37,7 @@ def set_config():
     globals()['kostal_start_value']     = 500
     globals()['kostal_max_value']       = 4500
     globals()['plenticore_instance']    = 0
+    globals()['startup_timer']          = 3
     globals()['debug']                  = False
 
     globals()['pollinterval']           = get_pollinterval()
@@ -49,6 +50,7 @@ gpio_frequency => value in Hz
 kostal_start_value => any value below will be ignored on output  
 kostal_max_value => should be set to MAX Value  
 plenticore_instance => which instance to use  
+startup_timer => seconds to wait if last PWM-Signal was 0
 debug => turn on debug messages (shown on commandline or journalctl)  
 pollinterval => gets interval setting from Plenticore config (don't change)  
 
