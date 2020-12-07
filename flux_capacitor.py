@@ -38,6 +38,7 @@ def set_config():
     globals()['kostal_start_value']     = 500
     globals()['kostal_max_value']       = 4500
     globals()['plenticore_instance']    = 0
+    globals()['startup_time']           = 3
     globals()['debug']                  = False
 
     globals()['pollinterval']           = get_pollinterval()
@@ -128,6 +129,10 @@ if __name__ == "__main__":
             home_p=get_power_value("Home_P")     # expected value between 0.000 and ∞ (plus duty if enabled)
             if (abs(home_p - my_duty) < (homepv_p - kostal_start_value)):
                 my_gpios.write(gpio_output, 1)
+                if my_duty == 0:
+                    if debug:
+                        printf("Waiting for Startup, duty was: ", my_duty)
+                    time.sleep(startup_time)
                 # TODO
                 # decide how to use kostal_start_value
                 # if kostal_start_value is subtracted, PWM-Output-Signal will be between 0% and 100%
